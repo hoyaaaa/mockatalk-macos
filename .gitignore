@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# Build outputs
+.build/
+DerivedData/
+
+# Runtime VM state and generated artifacts
+runtime/
+*.qcow2
+*.fd
+*.img
+*.iso
+*.log
+
+# Local app support exports
+Application Support/
+Logs/

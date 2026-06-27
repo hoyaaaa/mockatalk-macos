@@ -1,0 +1,80 @@
+# Operations
+
+## macSandbox Source Checkout
+
+Use the local checkout instead of an installed macSandbox app:
+
+```sh
+cd /Users/hoya/macSandbox
+git remote -v
+git pull --ff-only origin main
+```
+
+The upstream repository is:
+
+`https://github.com/yourtablecloth/macSandbox.git`
+
+The PR page is:
+
+`https://github.com/yourtablecloth/macSandbox/pulls`
+
+Do not assume `/Applications/macSandbox for Windows.app` exists. It was removed because this project should use macSandbox as source/reference code, not as the product runtime.
+
+## Current Manual Recovery Notes
+
+The macSandbox virtio download previously hung during `Preparing virtio-win drivers...`.
+
+Observed state:
+
+- `curl` process ran for more than 8 hours
+- TCP connection was `CLOSED`
+- partial file stopped around 386 MB
+
+Local fix applied:
+
+- resumed and completed `virtio-win.iso`
+- verified final size: `789645312`
+- verified ISO label: `virtio-win-0.1.285`
+
+Expected final file when the macSandbox app support directory exists:
+
+`/Users/hoya/Library/Application Support/MacSandbox/drivers/virtio-win.iso`
+
+## Checking macSandbox Baseline State
+
+```sh
+cat "/Users/hoya/Library/Application Support/MacSandbox/baseline/metadata.json"
+ls -lh "/Users/hoya/Library/Application Support/MacSandbox/baseline"
+```
+
+Baseline is usable only when metadata status is `ready`.
+
+## Build Or Run macSandbox From Source For Validation
+
+```sh
+cd /Users/hoya/macSandbox
+swift build
+.build/debug/MacSandbox
+```
+
+This is useful only for baseline creation and behavior validation. It is not the target product because macSandbox discards runtime changes.
+
+If a temporary `.wsb` validation is needed, pass the config to the source-built executable:
+
+```sh
+cd /Users/hoya/macSandbox
+.build/debug/MacSandbox /Users/hoya/Downloads/KakaoTalk-Windows/kakaotalk-macsandbox.wsb
+```
+
+## Prototype Commands To Derive
+
+Future prototype should derive QEMU args from:
+
+`/Users/hoya/macSandbox/src/MacSandbox/Core/QEMURuntime.swift`
+
+Key needed behavior:
+
+- persistent overlay instead of disposable overlay
+- fixed app support path
+- RDP host forward
+- no `.wsb`
