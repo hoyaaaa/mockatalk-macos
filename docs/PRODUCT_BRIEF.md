@@ -9,6 +9,8 @@ Make a macOS app that lets the user run one additional KakaoTalk instance using 
 - quit app
 - next launch keeps login state
 
+Use the oldest currently supported Windows target for KakaoTalk. Current target: Windows 10 ARM64, based on KakaoTalk for Windows listing Windows 10 or later as the requirement.
+
 ## User Experience Target
 
 The user should not need to think about Windows Sandbox, QEMU, overlays, `.wsb`, virtio drivers, or RDP.
@@ -48,5 +50,4 @@ Attempt to make the RDP surface feel more like a single app:
 
 Use RDP RemoteApp/RAIL to display only the KakaoTalk window.
 
-This is not supported by current macSandbox code and may not work reliably on normal Windows 11 client editions.
-
+This is not supported by current macSandbox code and may not work reliably on normal Windows 10/11 client editions.
