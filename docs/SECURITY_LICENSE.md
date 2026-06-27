@@ -2,7 +2,7 @@
 
 ## Windows Licensing
 
-This project runs a Windows 10 ARM64 guest from a non-Windows host when possible, because KakaoTalk currently lists Windows 10 or later as its Windows requirement. Windows 11 ARM64 is only a compatibility fallback if Windows 10 ARM64 cannot satisfy the MVP.
+This project runs a Windows 11 ARM64 guest from a non-Windows host for the MVP. Windows 10 ARM64 may be tested later as a lower-spec experiment because KakaoTalk lists Windows 10 or later, but it is not the primary target.
 
 The user is responsible for valid Windows licensing and activation. Consumer/OEM licensing may not cover this use case. Organizational or commercial use may require additional virtualization rights.
 

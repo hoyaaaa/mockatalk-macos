@@ -1,11 +1,11 @@
 # KakaoTalkWinApp
 
-Goal: build a macOS app that feels like a second KakaoTalk instance, backed by Windows KakaoTalk running inside a hidden, dedicated Windows ARM64 VM using the oldest currently supported Windows version.
+Goal: build a macOS app that feels like a second KakaoTalk instance, backed by Windows KakaoTalk running inside a hidden, dedicated Windows ARM64 VM.
 
 This is not a native Windows-app compatibility layer. The practical design is:
 
 - macOS app shell: `KakaoTalk Windows.app`
-- QEMU Windows 10 ARM64 VM in the background
+- QEMU Windows 11 ARM64 VM in the background
 - persistent qcow2 overlay dedicated to KakaoTalk
 - embedded RDP view for display/input/clipboard
 - Windows auto-logon and KakaoTalk auto-launch
@@ -19,11 +19,11 @@ Known local inputs:
 - macSandbox PRs page: `https://github.com/yourtablecloth/macSandbox/pulls`
 - Windows KakaoTalk installer: `/Users/hoya/Downloads/KakaoTalk-Windows/KakaoTalk_Setup_qwin64.exe`
 
-Current KakaoTalk OS target:
+Current Windows target:
 
 - Microsoft Store lists KakaoTalk for Windows as requiring Windows 10 or later.
-- Therefore the preferred guest OS target is Windows 10 ARM64, not Windows 11 ARM64.
-- If Windows 10 ARM64 media, drivers, RDP, or KakaoTalk behavior blocks the MVP, document the blocker and fall back to Windows 11 ARM64 only as a compatibility fallback.
+- Primary MVP target is Windows 11 ARM64 because official ARM64 media is available and macSandbox is built around Windows 11 ARM64 baseline generation.
+- Windows 10 ARM64 remains an experimental low-spec target, but official media availability, VM support, drivers, and app compatibility are weaker.
 
 Current local reality:
 
@@ -47,7 +47,7 @@ At the time this project was created, the macSandbox baseline was not confirmed 
 
 ## MVP
 
-1. Reuse or create a Windows 10 ARM64 baseline.
+1. Reuse or create a Windows 11 ARM64 baseline.
 2. Create one persistent overlay for KakaoTalk.
 3. Boot the overlay with QEMU and RDP port forwarding.
 4. Auto-logon to Windows.

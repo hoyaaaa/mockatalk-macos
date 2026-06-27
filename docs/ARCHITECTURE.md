@@ -6,7 +6,7 @@
 flowchart LR
   A["KakaoTalk Windows.app"] --> B["VM lifecycle controller"]
   B --> C["QEMU aarch64 + HVF"]
-  C --> D["Windows 10 ARM64 baseline"]
+  C --> D["Windows 11 ARM64 baseline"]
   D --> E["Persistent KakaoTalk overlay"]
   B --> F["RDP port forward"]
   F --> G["Embedded FreeRDP view"]
@@ -17,7 +17,7 @@ flowchart LR
 
 The app launches QEMU with:
 
-- Windows 10 ARM64 baseline qcow2 as backing image
+- Windows 11 ARM64 baseline qcow2 as backing image
 - persistent KakaoTalk qcow2 overlay as writable disk
 - UEFI firmware
 - user-mode NAT

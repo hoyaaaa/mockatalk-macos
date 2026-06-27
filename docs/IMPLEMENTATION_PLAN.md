@@ -2,7 +2,7 @@
 
 ## Phase 0: Baseline Readiness
 
-Use the local macSandbox source checkout, or a copied baseline builder derived from it, to create a Windows 10 ARM64 baseline.
+Use the local macSandbox source checkout, or a copied baseline builder derived from it, to create a Windows 11 ARM64 baseline.
 
 Do not depend on an installed `/Applications/macSandbox for Windows.app`; it was removed and is not part of this project's expected inputs.
 
@@ -17,13 +17,13 @@ Done when:
 - baseline metadata status is ready
 - baseline qcow2 exists
 - RDP can connect to a booted overlay
-- KakaoTalk installer launches on Windows 10 ARM64
+- KakaoTalk installer launches on Windows 11 ARM64
 
 Expected source path after a successful macSandbox baseline build:
 
 `/Users/hoya/Library/Application Support/MacSandbox/baseline/baseline.qcow2`
 
-macSandbox is written around Windows 11 ARM64 baseline generation. The first implementation pass should check whether the same builder works with Windows 10 ARM64 media. If not, adapt the copied builder or record a compatibility fallback to Windows 11 ARM64.
+Windows 10 ARM64 is not the MVP target. Keep it as a later low-spec experiment only after Windows 11 ARM64 proves the end-to-end flow.
 
 ## Phase 1: Minimal External-RDP Prototype
 
@@ -97,7 +97,7 @@ Research only after MVP works.
 
 Questions:
 
-- Can Windows 10/11 ARM64 client expose KakaoTalk through RemoteApp/RAIL without Windows Server?
+- Can Windows 11 ARM64 client expose KakaoTalk through RemoteApp/RAIL without Windows Server?
 - Can FreeRDP embedded engine set the needed RemoteApp settings?
 - Does KakaoTalk behave correctly as a RemoteApp?
 

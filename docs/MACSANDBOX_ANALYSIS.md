@@ -12,7 +12,7 @@ Local note: the installed `/Applications/macSandbox for Windows.app` is not expe
 
 macSandbox is a QEMU-backed Windows 11 ARM64 VM runner with an embedded RDP display.
 
-For this project, macSandbox should be treated as implementation reference code, not as the final OS target. KakaoTalk currently lists Windows 10 or later as its Windows requirement, so this project should first attempt a Windows 10 ARM64 baseline and only fall back to Windows 11 ARM64 if Windows 10 ARM64 blocks the MVP.
+For this project, macSandbox should be treated as implementation reference code and as a strong signal for the primary OS target. Use Windows 11 ARM64 for the MVP because macSandbox is built around that baseline. Keep Windows 10 ARM64 as a later low-spec experiment only.
 
 It is not a Windows app compatibility layer and it does not run Windows apps directly on macOS.
 

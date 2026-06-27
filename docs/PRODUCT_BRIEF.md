@@ -9,7 +9,7 @@ Make a macOS app that lets the user run one additional KakaoTalk instance using 
 - quit app
 - next launch keeps login state
 
-Use the oldest currently supported Windows target for KakaoTalk. Current target: Windows 10 ARM64, based on KakaoTalk for Windows listing Windows 10 or later as the requirement.
+Use Windows 11 ARM64 as the primary MVP guest because it has better official media availability and macSandbox support. Windows 10 ARM64 remains an experimental low-spec target because KakaoTalk lists Windows 10 or later, but Windows 10 ARM64 media/support risk is higher.
 
 ## User Experience Target
 

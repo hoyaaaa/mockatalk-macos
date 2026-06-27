@@ -32,10 +32,10 @@ Decision:
 
 Ship MVP with full RDP surface hidden/polished as much as possible. Research RemoteApp later.
 
-## 2026-06-27: Target the oldest KakaoTalk-supported Windows
+## 2026-06-27: Use Windows 11 ARM64 for MVP
 
-Current KakaoTalk for Windows system requirements list Windows 10 or later.
+Current KakaoTalk for Windows system requirements list Windows 10 or later, but official Windows 10 ARM64 media is hard to obtain and VM support is weaker.
 
 Decision:
 
-Prefer a Windows 10 ARM64 guest baseline. Use Windows 11 ARM64 only as a documented compatibility fallback if Windows 10 ARM64 media, drivers, RDP, or KakaoTalk behavior blocks the MVP.
+Prefer a Windows 11 ARM64 guest baseline for MVP. Keep Windows 10 ARM64 as a later low-spec experiment only after the Windows 11 ARM64 path works end to end.
