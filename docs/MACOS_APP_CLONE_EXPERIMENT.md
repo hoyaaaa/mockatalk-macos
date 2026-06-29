@@ -20,18 +20,18 @@ server-side account/session facts. It can only change local app identity:
 
 ```bash
 scripts/create-kakaotalk-macos-clone.sh
-open -n "KakaoTalk Max Isolated.app"
+open -n "카카오톡Sub.app"
 ```
 
 Defaults:
 
 - source: `/Applications/KakaoTalk.app`
-- clone: `./KakaoTalk Max Isolated.app`
-- bundle id: `com.hoya.KakaoTalkMaxIsolated`
-- display name: `KakaoTalk Max Isolated`
-- executable name: `KakaoTalkMaxIsolated`
+- clone: `./카카오톡Sub.app`
+- bundle id: `com.hoyaaaa.KakaoTalkSub`
+- display name: `카카오톡Sub`
+- executable name: `KakaoTalkSub`
 
-The script also rewrites URL schemes with a `-maxisolated` suffix so the clone
+The script also rewrites URL schemes with a `-sub` suffix so the clone
 does not compete with the official app for `kakaotalk`, `kakaoshare`,
 `kakaoopen`, or `kakaoplus` links.
 
@@ -46,6 +46,6 @@ also break KakaoTalk if the app requires its original sandbox, application
 group, receipt, or keychain access group.
 
 Observed after login, the clone used separate local storage under
-`com.hoya.KakaoTalkMaxIsolated` for app support, WebKit, preferences, HTTP
+`com.hoyaaaa.KakaoTalkSub` for app support, WebKit, preferences, HTTP
 storage, cache, and logs. It is still running as the same macOS user and should
 not be described as complete device isolation.

@@ -2,11 +2,21 @@
 set -euo pipefail
 
 SRC_APP="${SRC_APP:-/Applications/KakaoTalk.app}"
-DEST_APP="${DEST_APP:-$PWD/KakaoTalk Max Isolated.app}"
-BUNDLE_ID="${BUNDLE_ID:-com.hoya.KakaoTalkMaxIsolated}"
-DISPLAY_NAME="${DISPLAY_NAME:-KakaoTalk Max Isolated}"
-EXECUTABLE_NAME="${EXECUTABLE_NAME:-KakaoTalkMaxIsolated}"
-URL_SUFFIX="${URL_SUFFIX:-maxisolated}"
+DEST_APP="${DEST_APP:-$PWD/카카오톡Sub.app}"
+BUNDLE_ID="${BUNDLE_ID:-com.hoyaaaa.KakaoTalkSub}"
+DISPLAY_NAME="${DISPLAY_NAME:-카카오톡Sub}"
+EXECUTABLE_NAME="${EXECUTABLE_NAME:-KakaoTalkSub}"
+URL_SUFFIX="${URL_SUFFIX:-sub}"
+
+set_plist_string() {
+  local file="$1"
+  local key="$2"
+  local value="$3"
+
+  /usr/libexec/PlistBuddy -c "Set :$key $value" "$file" 2>/dev/null || \
+    /usr/libexec/PlistBuddy -c "Add :$key string $value" "$file" 2>/dev/null || \
+    plutil -replace "$key" -string "$value" "$file"
+}
 
 if [[ ! -d "$SRC_APP" ]]; then
   echo "missing source app: $SRC_APP" >&2
@@ -46,8 +56,8 @@ fi
 
 find "$DEST_APP" -path '*/Contents/Resources/*.lproj/InfoPlist.strings' -print0 |
 while IFS= read -r -d '' strings_file; do
-  plutil -replace CFBundleDisplayName -string "$DISPLAY_NAME" "$strings_file" 2>/dev/null || true
-  plutil -replace CFBundleName -string "$DISPLAY_NAME" "$strings_file" 2>/dev/null || true
+  set_plist_string "$strings_file" CFBundleDisplayName "$DISPLAY_NAME"
+  set_plist_string "$strings_file" CFBundleName "$DISPLAY_NAME"
 done
 
 # Re-sign ad-hoc. Do not preserve App Store restricted entitlements; they are
