@@ -5,6 +5,7 @@ SRC_APP="${SRC_APP:-/Applications/KakaoTalk.app}"
 DEST_APP="${DEST_APP:-$PWD/KakaoTalk Max Isolated.app}"
 BUNDLE_ID="${BUNDLE_ID:-com.hoya.KakaoTalkMaxIsolated}"
 DISPLAY_NAME="${DISPLAY_NAME:-KakaoTalk Max Isolated}"
+EXECUTABLE_NAME="${EXECUTABLE_NAME:-KakaoTalkMaxIsolated}"
 URL_SUFFIX="${URL_SUFFIX:-maxisolated}"
 
 if [[ ! -d "$SRC_APP" ]]; then
@@ -20,10 +21,16 @@ cp -R "$SRC_APP" "$DEST_APP"
 xattr -cr "$DEST_APP" || true
 
 INFO="$DEST_APP/Contents/Info.plist"
+OLD_EXECUTABLE=$(/usr/libexec/PlistBuddy -c "Print :CFBundleExecutable" "$INFO")
+if [[ "$OLD_EXECUTABLE" != "$EXECUTABLE_NAME" ]]; then
+  mv "$DEST_APP/Contents/MacOS/$OLD_EXECUTABLE" "$DEST_APP/Contents/MacOS/$EXECUTABLE_NAME"
+fi
+
 /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier $BUNDLE_ID" "$INFO"
 /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName $DISPLAY_NAME" "$INFO" 2>/dev/null || \
   /usr/libexec/PlistBuddy -c "Add :CFBundleDisplayName string $DISPLAY_NAME" "$INFO"
 /usr/libexec/PlistBuddy -c "Set :CFBundleName $DISPLAY_NAME" "$INFO"
+/usr/libexec/PlistBuddy -c "Set :CFBundleExecutable $EXECUTABLE_NAME" "$INFO"
 
 # Avoid fighting the original app for URL scheme ownership.
 if /usr/libexec/PlistBuddy -c "Print :CFBundleURLTypes" "$INFO" >/dev/null 2>&1; then
@@ -50,6 +57,7 @@ codesign --force --deep --sign - "$DEST_APP" >/dev/null
 echo "created: $DEST_APP"
 echo "bundle id: $BUNDLE_ID"
 echo "display name: $DISPLAY_NAME"
+echo "executable: $EXECUTABLE_NAME"
 echo
 echo "Try:"
 echo "open -n \"$DEST_APP\""

@@ -11,6 +11,7 @@ server-side account/session facts. It can only change local app identity:
 
 - bundle id
 - display name
+- executable name
 - Launch Services identity
 - URL scheme ownership
 - app signature
@@ -28,6 +29,11 @@ Defaults:
 - clone: `./KakaoTalk Max Isolated.app`
 - bundle id: `com.hoya.KakaoTalkMaxIsolated`
 - display name: `KakaoTalk Max Isolated`
+- executable name: `KakaoTalkMaxIsolated`
+
+The script also rewrites URL schemes with a `-maxisolated` suffix so the clone
+does not compete with the official app for `kakaotalk`, `kakaoshare`,
+`kakaoopen`, or `kakaoplus` links.
 
 ## Important Caveat
 
