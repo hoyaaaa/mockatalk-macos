@@ -1,18 +1,15 @@
 # KakaoTalkSubMacos
 
-Goal: keep a second KakaoTalk instance on the same Mac without a full VM, Wine,
-or paid software.
+macOS에서 공식 카카오톡 앱을 복사해 **카카오톡Sub**라는 별도 앱으로 실행하는 스크립트입니다.
 
-The final local path is a native macOS app clone. The script copies the official
-`/Applications/KakaoTalk.app`, gives the copy a distinct bundle identity and
-executable name, rewrites Kakao URL schemes, then ad-hoc signs the result.
+공식 `/Applications/KakaoTalk.app`을 기반으로 앱 번들 ID, 표시 이름, 실행 파일 이름, URL 스킴을 바꾸고 다시 서명합니다.
 
-## Use
+## 준비
 
-Prerequisite: install the official macOS KakaoTalk app at
-`/Applications/KakaoTalk.app`.
+- macOS용 공식 카카오톡이 `/Applications/KakaoTalk.app`에 설치되어 있어야 합니다.
+- Xcode Command Line Tools의 기본 도구(`/usr/libexec/PlistBuddy`, `plutil`, `codesign`)를 사용합니다.
 
-Create or refresh the clone:
+## 설치
 
 ```bash
 git clone https://github.com/hoyaaaa/kakaotalk-sub-macos.git
@@ -20,73 +17,63 @@ cd kakaotalk-sub-macos
 scripts/create-kakaotalk-macos-clone.sh
 ```
 
-Open it:
+생성되는 앱:
+
+- 앱 경로: `./카카오톡Sub.app`
+- 번들 ID: `com.hoyaaaa.KakaoTalkSub`
+- 표시 이름: `카카오톡Sub`
+- 실행 파일: `KakaoTalkSub`
+
+## 실행
 
 ```bash
 open -n "카카오톡Sub.app"
 ```
 
-Install the periodic update checker:
+## 업데이트 확인 자동화
 
 ```bash
 scripts/install-update-checker.sh
 ```
 
-The checker compares the official KakaoTalk version with `카카오톡Sub.app` every
-6 hours. If the versions differ, it shows a macOS dialog asking whether to
-recreate `카카오톡Sub.app` from the updated official app.
+설치하면 LaunchAgent가 6시간마다 공식 카카오톡과 `카카오톡Sub.app`의 버전을 비교합니다.
 
-The scripts can live in any folder. The update checker records the current repo
-path when `scripts/install-update-checker.sh` is run, so rerun that installer if
-the repo folder is moved.
+버전이 다르면 macOS 알림창으로 업데이트 여부를 묻고, 사용자가 동의하면 최신 공식 앱을 기준으로 `카카오톡Sub.app`을 다시 만듭니다.
 
-Default clone identity:
+repo 폴더를 옮긴 경우에는 LaunchAgent에 저장된 경로도 바뀌어야 하므로 아래 명령을 다시 실행하세요.
 
-- app path: `./카카오톡Sub.app`
-- bundle id: `com.hoyaaaa.KakaoTalkSub`
-- display name: `카카오톡Sub`
-- executable: `KakaoTalkSub`
+```bash
+scripts/install-update-checker.sh
+```
 
-Running the script replaces the cloned app bundle at
-`./카카오톡Sub.app`. It does not remove the clone's existing
-per-bundle data under `~/Library/Application Support`,
-`~/Library/WebKit`, `~/Library/Caches`, or related user-library folders.
+## 수동 업데이트
 
-## Current Result
+공식 카카오톡이 업데이트된 뒤 직접 갱신하고 싶으면 다시 실행하면 됩니다.
 
-The original KakaoTalk and the clone can run at the same time. Observed local
-storage is separated:
+```bash
+scripts/create-kakaotalk-macos-clone.sh
+```
 
-- original: `~/Library/Containers/com.kakao.KakaoTalkMac`
-- clone: `~/Library/Application Support/com.hoyaaaa.KakaoTalkSub`
-- clone WebKit/cache/preferences: `~/Library/WebKit`,
-  `~/Library/Caches`, `~/Library/Preferences`,
-  `~/Library/HTTPStorages` under `com.hoyaaaa.KakaoTalkSub`
+이 명령은 `카카오톡Sub.app` 앱 번들을 새로 만들지만, 일반적으로 `~/Library/Application Support/com.hoyaaaa.KakaoTalkSub` 같은 사용자 데이터 폴더는 지우지 않습니다.
 
-No obvious Kakao Keychain item was present during inspection. Practical success
-criterion is that the original app and the clone keep separate logins after
-restarting both apps.
+## 한계
 
-## Limits
+- 같은 macOS 사용자 안에서 실행되는 앱 복사본입니다.
+- 하드웨어 정보, Mac 모델, OS 버전, IP 주소, 카카오 서버의 계정/세션 정보까지 숨기지는 않습니다.
+- 공식 앱과 완전히 다른 기기처럼 보장하는 방식은 아닙니다.
+- 공식 앱 업데이트 후에는 `카카오톡Sub.app`을 다시 만들어야 합니다.
 
-- This does not hide hardware identifiers, Mac model, OS version, IP address, or
-  Kakao server-side account/session facts.
-- This is not as isolated as a different OS user or VM.
-- Updating the official KakaoTalk app requires recreating the clone.
-- The clone is ad-hoc signed after modifying `Info.plist`.
+## 제거
 
-## Abandoned Paths
+자동 업데이트 확인을 끄려면:
 
-These were tested and removed from the active project:
+```bash
+launchctl bootout "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.hoyaaaa.KakaoTalkSub.update-checker.plist"
+rm "$HOME/Library/LaunchAgents/com.hoyaaaa.KakaoTalkSub.update-checker.plist"
+```
 
-- Windows 11 ARM64 VM via macSandbox: Windows booted and KakaoTalk installed,
-  but latest Windows KakaoTalk crashed before showing UI.
-- Windows 10 ARM64 media: no clean official path for this use case.
-- Wine/Whisky: already tried and failed.
-- CrossOver: paid, outside the target.
-- macOS separate user plus Screen Sharing: blocked by local control limitations.
+앱 번들을 지우려면:
 
-## Docs
-
-- [macOS App Clone Experiment](docs/MACOS_APP_CLONE_EXPERIMENT.md)
-- [Decisions](docs/DECISIONS.md)
+```bash
+rm -rf "카카오톡Sub.app"
+```
