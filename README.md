@@ -1,4 +1,4 @@
-# KakaoTalkWinApp
+# KakaoTalkSubMacos
 
 Goal: keep a second KakaoTalk instance on the same Mac without a full VM, Wine,
 or paid software.
@@ -15,7 +15,7 @@ Prerequisite: install the official macOS KakaoTalk app at
 Create or refresh the clone:
 
 ```bash
-cd /Users/hoya/KakaoTalkWinApp
+cd /Users/hoya/KakaoTalkSubMacos
 scripts/create-kakaotalk-macos-clone.sh
 ```
 
