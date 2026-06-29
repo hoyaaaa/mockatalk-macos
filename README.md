@@ -29,6 +29,7 @@ scripts/install-app.sh
 - 번들 ID: `com.hoyaaaa.KakaoTalkSub`
 - 표시 이름: `카카오톡Sub`
 - 업데이트 체커: `~/Library/LaunchAgents/com.hoyaaaa.KakaoTalkSub.update-checker.plist`
+- 업데이트 helper: `~/Library/Application Support/KakaoTalkSubMacos`
 
 ## 실행
 
@@ -41,12 +42,6 @@ open "/Applications/카카오톡Sub.app"
 설치 스크립트가 LaunchAgent를 등록하므로, macOS가 5분마다 공식 카카오톡과 `/Applications/카카오톡Sub.app`의 버전을 비교합니다.
 
 버전이 다르면 macOS 확인 창으로 업데이트 여부를 묻고, 사용자가 동의하면 최신 공식 앱을 기준으로 `/Applications/카카오톡Sub.app`을 다시 만듭니다.
-
-repo 폴더를 옮긴 경우에는 LaunchAgent에 저장된 경로도 바뀌어야 하므로 아래 명령을 다시 실행하세요.
-
-```bash
-scripts/install-update-checker.sh
-```
 
 ## 수동 업데이트
 
@@ -74,7 +69,7 @@ scripts/install-app.sh
 scripts/uninstall.sh
 ```
 
-이 스크립트는 `/Applications/카카오톡Sub.app`, LaunchAgent, 로컬 빌드 파일, `com.hoyaaaa.KakaoTalkSub` 사용자 데이터를 제거합니다. 실행 시 확인 문구를 요구하며, 소스 repo 폴더 자체는 지우지 않습니다.
+이 스크립트는 `/Applications/카카오톡Sub.app`, LaunchAgent, 업데이트 helper, `com.hoyaaaa.KakaoTalkSub` 사용자 데이터를 제거합니다. 실행 시 확인 문구를 요구하며, 소스 repo 폴더 자체는 지우지 않습니다.
 
 확인 없이 제거하려면:
 
