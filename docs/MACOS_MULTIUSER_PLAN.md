@@ -50,7 +50,7 @@ scripts/create-macos-kakao-session-app.sh
 ```
 
 `setup-macos-kakao-user.sh` requires `sudo` because it creates a local macOS
-account, marks it hidden by default, and enables Screen Sharing access.
+account, marks it hidden, and enables Screen Sharing access.
 
 Defaults:
 
@@ -58,12 +58,6 @@ Defaults:
 - full name: `KakaoTalk 2`
 - hidden from login-window user list: yes
 - admin rights: removed if present
-
-Override hiding only when needed:
-
-```bash
-HIDE_USER=0 scripts/setup-macos-kakao-user.sh
-```
 
 ## Manual Verification
 
