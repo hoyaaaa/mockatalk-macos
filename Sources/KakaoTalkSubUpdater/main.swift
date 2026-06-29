@@ -18,8 +18,8 @@ let projectDir = CommandLine.arguments.dropFirst().first
         .path
 
 let sourceApp = URL(fileURLWithPath: ProcessInfo.processInfo.environment["SRC_APP"] ?? "/Applications/KakaoTalk.app")
-let targetApp = URL(fileURLWithPath: ProcessInfo.processInfo.environment["DEST_APP"] ?? "\(projectDir)/runtime/카카오톡Sub.app")
-let createScript = URL(fileURLWithPath: "\(projectDir)/scripts/create-kakaotalk-core-clone.sh")
+let targetApp = URL(fileURLWithPath: ProcessInfo.processInfo.environment["DEST_APP"] ?? "/Applications/카카오톡Sub.app")
+let createScript = URL(fileURLWithPath: "\(projectDir)/scripts/create-kakaotalk-macos-clone.sh")
 let bundleID = "com.hoyaaaa.KakaoTalkSub"
 
 func version(for appURL: URL) -> AppVersion? {

@@ -5,7 +5,6 @@ PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 LABEL="com.hoyaaaa.KakaoTalkSub.update-checker"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 APP_SUPPORT_ID="com.hoyaaaa.KakaoTalkSub"
-WRAPPER_ID="com.hoyaaaa.KakaoTalkSubLauncher"
 
 if [[ "${1:-}" != "--yes" ]]; then
   echo "This will remove /Applications/카카오톡Sub.app, LaunchAgent, runtime files, and com.hoyaaaa.KakaoTalkSub user data."
@@ -17,7 +16,6 @@ if [[ "${1:-}" != "--yes" ]]; then
 fi
 
 osascript -e "tell application id \"$APP_SUPPORT_ID\" to quit" >/dev/null 2>&1 || true
-osascript -e "tell application id \"$WRAPPER_ID\" to quit" >/dev/null 2>&1 || true
 launchctl bootout "gui/$(id -u)" "$PLIST" >/dev/null 2>&1 || true
 
 rm -f "$PLIST"

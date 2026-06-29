@@ -4,7 +4,7 @@ set -euo pipefail
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 LABEL="com.hoyaaaa.KakaoTalkSub.update-checker"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
-INTERVAL_SECONDS="${INTERVAL_SECONDS:-3600}"
+INTERVAL_SECONDS="${INTERVAL_SECONDS:-300}"
 UPDATER_BIN="$PROJECT_DIR/.build/KakaoTalkSubUpdater"
 UPDATER_SRC="$PROJECT_DIR/Sources/KakaoTalkSubUpdater/main.swift"
 

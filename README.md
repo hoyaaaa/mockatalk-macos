@@ -1,8 +1,8 @@
 # KakaoTalkSubMacos
 
-macOS에서 공식 카카오톡 앱을 복사해 **카카오톡Sub**라는 별도 앱으로 실행하는 래퍼 앱 생성 스크립트입니다.
+macOS에서 공식 카카오톡 앱을 복사해 **카카오톡Sub**라는 별도 앱으로 설치하는 스크립트입니다.
 
-사용자가 여는 `카카오톡Sub.app`은 Swift 래퍼 앱입니다. 래퍼는 실행될 때 공식 카카오톡과 내부 복제 앱의 버전을 비교하고, 필요하면 업데이트 확인 창을 띄운 뒤 실제 카카오톡 복제 앱을 실행합니다.
+`/Applications/카카오톡Sub.app` 자체가 실제 실행 앱입니다. 업데이트 확인은 설치 시 등록되는 LaunchAgent가 백그라운드에서 담당합니다.
 
 ## 주의
 
@@ -26,9 +26,7 @@ scripts/install-app.sh
 설치되는 항목:
 
 - 실행 앱: `/Applications/카카오톡Sub.app`
-- 내부 복제 앱: `./runtime/카카오톡Sub.app`
-- 래퍼 번들 ID: `com.hoyaaaa.KakaoTalkSubLauncher`
-- 내부 복제 앱 번들 ID: `com.hoyaaaa.KakaoTalkSub`
+- 번들 ID: `com.hoyaaaa.KakaoTalkSub`
 - 표시 이름: `카카오톡Sub`
 - 업데이트 체커: `~/Library/LaunchAgents/com.hoyaaaa.KakaoTalkSub.update-checker.plist`
 
@@ -40,11 +38,9 @@ open "/Applications/카카오톡Sub.app"
 
 ## 업데이트 확인
 
-`카카오톡Sub.app`을 실행할 때마다 공식 카카오톡과 내부 복제 앱의 버전을 비교합니다.
+설치 스크립트가 LaunchAgent를 등록하므로, macOS가 5분마다 공식 카카오톡과 `/Applications/카카오톡Sub.app`의 버전을 비교합니다.
 
-버전이 다르면 macOS 확인 창으로 업데이트 여부를 묻고, 사용자가 동의하면 최신 공식 앱을 기준으로 내부 복제 앱을 다시 만듭니다.
-
-설치 스크립트가 LaunchAgent도 함께 등록하므로, 앱을 실행하지 않아도 1시간마다 공식 카카오톡과 내부 복제 앱의 버전을 비교합니다.
+버전이 다르면 macOS 확인 창으로 업데이트 여부를 묻고, 사용자가 동의하면 최신 공식 앱을 기준으로 `/Applications/카카오톡Sub.app`을 다시 만듭니다.
 
 repo 폴더를 옮긴 경우에는 LaunchAgent에 저장된 경로도 바뀌어야 하므로 아래 명령을 다시 실행하세요.
 
@@ -60,7 +56,7 @@ scripts/install-update-checker.sh
 scripts/install-app.sh
 ```
 
-이 명령은 `카카오톡Sub.app` 래퍼와 내부 복제 앱을 새로 만들지만, 일반적으로 `~/Library/Application Support/com.hoyaaaa.KakaoTalkSub` 같은 사용자 데이터 폴더는 지우지 않습니다.
+이 명령은 `/Applications/카카오톡Sub.app`을 새로 만들지만, 일반적으로 `~/Library/Application Support/com.hoyaaaa.KakaoTalkSub` 같은 사용자 데이터 폴더는 지우지 않습니다.
 
 ## 한계
 
@@ -78,7 +74,7 @@ scripts/install-app.sh
 scripts/uninstall.sh
 ```
 
-이 스크립트는 `/Applications/카카오톡Sub.app`, LaunchAgent, 로컬 런타임, `com.hoyaaaa.KakaoTalkSub` 사용자 데이터를 제거합니다. 실행 시 확인 문구를 요구하며, 소스 repo 폴더 자체는 지우지 않습니다.
+이 스크립트는 `/Applications/카카오톡Sub.app`, LaunchAgent, 로컬 빌드 파일, `com.hoyaaaa.KakaoTalkSub` 사용자 데이터를 제거합니다. 실행 시 확인 문구를 요구하며, 소스 repo 폴더 자체는 지우지 않습니다.
 
 확인 없이 제거하려면:
 
