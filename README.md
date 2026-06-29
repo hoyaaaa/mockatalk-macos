@@ -15,7 +15,8 @@ Prerequisite: install the official macOS KakaoTalk app at
 Create or refresh the clone:
 
 ```bash
-cd /Users/hoya/KakaoTalkSubMacos
+git clone https://github.com/hoyaaaa/kakaotalk-sub-macos.git
+cd kakaotalk-sub-macos
 scripts/create-kakaotalk-macos-clone.sh
 ```
 
@@ -24,6 +25,20 @@ Open it:
 ```bash
 open -n "카카오톡Sub.app"
 ```
+
+Install the periodic update checker:
+
+```bash
+scripts/install-update-checker.sh
+```
+
+The checker compares the official KakaoTalk version with `카카오톡Sub.app` every
+6 hours. If the versions differ, it shows a macOS dialog asking whether to
+recreate `카카오톡Sub.app` from the updated official app.
+
+The scripts can live in any folder. The update checker records the current repo
+path when `scripts/install-update-checker.sh` is run, so rerun that installer if
+the repo folder is moved.
 
 Default clone identity:
 
