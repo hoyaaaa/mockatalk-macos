@@ -9,9 +9,13 @@ executable name, rewrites Kakao URL schemes, then ad-hoc signs the result.
 
 ## Use
 
+Prerequisite: install the official macOS KakaoTalk app at
+`/Applications/KakaoTalk.app`.
+
 Create or refresh the clone:
 
 ```bash
+cd /Users/hoya/KakaoTalkWinApp
 scripts/create-kakaotalk-macos-clone.sh
 ```
 
@@ -27,6 +31,11 @@ Default clone identity:
 - bundle id: `com.hoya.KakaoTalkMaxIsolated`
 - display name: `KakaoTalk Max Isolated`
 - executable: `KakaoTalkMaxIsolated`
+
+Running the script replaces the cloned app bundle at
+`./KakaoTalk Max Isolated.app`. It does not remove the clone's existing
+per-bundle data under `~/Library/Application Support`,
+`~/Library/WebKit`, `~/Library/Caches`, or related user-library folders.
 
 ## Current Result
 
