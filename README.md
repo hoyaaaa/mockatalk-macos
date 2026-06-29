@@ -99,6 +99,7 @@ For the very first prototype, using external `sdl-freerdp` is acceptable. Once V
 ## Docs
 
 - [macOS Multiuser Plan](docs/MACOS_MULTIUSER_PLAN.md)
+- [macOS App Clone Experiment](docs/MACOS_APP_CLONE_EXPERIMENT.md)
 - [Product Brief](docs/PRODUCT_BRIEF.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [macSandbox Analysis](docs/MACSANDBOX_ANALYSIS.md)

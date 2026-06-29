@@ -13,5 +13,6 @@ This directory contains prototype setup and runtime scripts.
 - `setup-macos-kakao-user.sh`: create/prepare a separate macOS user for isolated native KakaoTalk
 - `open-macos-kakao-session.sh`: open Screen Sharing to the isolated macOS session
 - `create-macos-kakao-session-app.sh`: create a small launcher app for the Screen Sharing session
+- `create-kakaotalk-macos-clone.sh`: copy KakaoTalk.app with a distinct bundle id/name and ad-hoc signature
 
 Do not put secrets here.
