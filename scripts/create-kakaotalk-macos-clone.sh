@@ -8,6 +8,8 @@ DISPLAY_NAME="${DISPLAY_NAME:-카카오톡Sub}"
 EXECUTABLE_NAME="${EXECUTABLE_NAME:-KakaoTalkSub}"
 URL_SUFFIX="${URL_SUFFIX:-sub}"
 DISABLE_NOTIFICATIONS="${DISABLE_NOTIFICATIONS:-1}"
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ICON_SOURCE="${ICON_SOURCE:-$PROJECT_DIR/assets/kakaotalk-sub-icon.png}"
 
 set_plist_string() {
   local file="$1"
@@ -43,6 +45,36 @@ disable_notification_defaults() {
   defaults write "$BUNDLE_ID" "Notification Preview Enable" -bool false
   defaults write "$BUNDLE_ID" "UseChatPreview" -bool false
   defaults write "$BUNDLE_ID" "HideMenuBarIconBadge" -bool true
+}
+
+apply_custom_icon() {
+  local icon_source="$1"
+  local icon_name="AppIcon"
+  local iconset
+
+  if [[ ! -f "$icon_source" ]]; then
+    return 0
+  fi
+
+  iconset="$(mktemp -d)/${icon_name}.iconset"
+  mkdir -p "$iconset"
+
+  sips -z 16 16 "$icon_source" --out "$iconset/icon_16x16.png" >/dev/null
+  sips -z 32 32 "$icon_source" --out "$iconset/icon_16x16@2x.png" >/dev/null
+  sips -z 32 32 "$icon_source" --out "$iconset/icon_32x32.png" >/dev/null
+  sips -z 64 64 "$icon_source" --out "$iconset/icon_32x32@2x.png" >/dev/null
+  sips -z 128 128 "$icon_source" --out "$iconset/icon_128x128.png" >/dev/null
+  sips -z 256 256 "$icon_source" --out "$iconset/icon_128x128@2x.png" >/dev/null
+  sips -z 256 256 "$icon_source" --out "$iconset/icon_256x256.png" >/dev/null
+  sips -z 512 512 "$icon_source" --out "$iconset/icon_256x256@2x.png" >/dev/null
+  sips -z 512 512 "$icon_source" --out "$iconset/icon_512x512.png" >/dev/null
+  sips -z 1024 1024 "$icon_source" --out "$iconset/icon_512x512@2x.png" >/dev/null
+
+  iconutil -c icns "$iconset" -o "$DEST_APP/Contents/Resources/${icon_name}.icns"
+  /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile $icon_name" "$INFO" 2>/dev/null || \
+    /usr/libexec/PlistBuddy -c "Add :CFBundleIconFile string $icon_name" "$INFO"
+  /usr/libexec/PlistBuddy -c "Set :CFBundleIconName $icon_name" "$INFO" 2>/dev/null || \
+    /usr/libexec/PlistBuddy -c "Add :CFBundleIconName string $icon_name" "$INFO"
 }
 
 if [[ ! -d "$SRC_APP" ]]; then
@@ -87,6 +119,8 @@ while IFS= read -r -d '' strings_file; do
   set_plist_string "$strings_file" CFBundleName "$DISPLAY_NAME"
 done
 
+apply_custom_icon "$ICON_SOURCE"
+
 if [[ "$DISABLE_NOTIFICATIONS" == "1" ]]; then
   disable_notification_defaults
 fi
@@ -99,6 +133,9 @@ echo "created: $DEST_APP"
 echo "bundle id: $BUNDLE_ID"
 echo "display name: $DISPLAY_NAME"
 echo "executable: $EXECUTABLE_NAME"
+if [[ -f "$ICON_SOURCE" ]]; then
+  echo "icon: $ICON_SOURCE"
+fi
 if [[ "$DISABLE_NOTIFICATIONS" == "1" ]]; then
   echo "notifications: disabled by default"
 fi

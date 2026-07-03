@@ -9,11 +9,14 @@ INTERVAL_SECONDS="${INTERVAL_SECONDS:-300}"
 UPDATER_BIN="$SUPPORT_DIR/KakaoTalkSubUpdater"
 UPDATER_SRC="$PROJECT_DIR/Sources/KakaoTalkSubUpdater/main.swift"
 
-mkdir -p "$HOME/Library/LaunchAgents" "$SUPPORT_DIR/scripts"
+mkdir -p "$HOME/Library/LaunchAgents" "$SUPPORT_DIR/scripts" "$SUPPORT_DIR/assets"
 
 swiftc "$UPDATER_SRC" -o "$UPDATER_BIN"
 cp "$PROJECT_DIR/scripts/create-kakaotalk-macos-clone.sh" "$SUPPORT_DIR/scripts/create-kakaotalk-macos-clone.sh"
 chmod +x "$SUPPORT_DIR/scripts/create-kakaotalk-macos-clone.sh"
+if [[ -d "$PROJECT_DIR/assets" ]]; then
+  cp -R "$PROJECT_DIR/assets/." "$SUPPORT_DIR/assets/"
+fi
 
 cat >"$PLIST" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
