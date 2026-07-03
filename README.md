@@ -4,9 +4,11 @@
 
 <h1 align="center">MockaTalk (Mock KakaoTalk, Unofficial)</h1>
 
-MockaTalk은 macOS에서 카카오톡을 두 개, 2개, 듀얼, 멀티 앱처럼 띄우기 위해 공식 카카오톡 앱을 개인 사용 목적으로 복사해 별도 앱 번들로 실행하게 만드는 비공식 mock clone 스크립트 모음입니다.
+MockaTalk은 macOS에서 카카오톡을 2개(듀얼, 멀티) 앱처럼 띄우기 위해 공식 카카오톡 앱을 개인 사용 목적으로 복사해 별도 앱 번들로 실행하게 만드는 비공식 mock clone 스크립트 모음입니다.
 
-단순히 앱을 복사하는 일반적인 스크립트보다 앱 이름, 실행 파일, 번들 ID, URL 스킴, 사용자 데이터 경로, 업데이트 helper를 더 넓게 분리해 원본 카카오톡과 MockaTalk을 안정적으로 함께 실행하도록 구성합니다. 알림도 `com.hoyaaaa.MockaTalk` 기준의 별도 macOS 알림 profile을 사용해 원본 카카오톡과 분리되어 뜨도록 설정할 수 있습니다.
+- 단순 앱 복사보다 앱 이름, 실행 파일, 번들 ID, URL 스킴, 사용자 데이터 경로, 업데이트 helper를 더 넓게 분리합니다.
+- 원본 카카오톡과 MockaTalk을 안정적으로 함께 실행하도록 구성합니다.
+- `com.hoyaaaa.MockaTalk` 기준의 별도 macOS 알림 profile로 원본 카카오톡과 분리된 알림을 띄울 수 있습니다.
 
 이 프로젝트는 Kakao Corp., 카카오톡, KakaoTalk와 아무 관련이 없습니다. 카카오에서 제공, 승인, 검수, 보증, 지원하는 앱이나 도구가 아닙니다.
 
