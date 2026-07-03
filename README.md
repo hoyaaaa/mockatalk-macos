@@ -2,9 +2,9 @@
   <img src="assets/mockatalk-icon.png" alt="MockaTalk logo" width="160">
 </p>
 
-<h1 align="center">MockaTalk</h1>
+<h1 align="center">MockaTalk (Mock KakaoTalk, Unofficial)</h1>
 
-MockaTalk은 별도 브랜드나 공식 제품명이 아니라, macOS용 공식 카카오톡 앱을 개인 사용 목적으로 복사해 mock 복제본을 만드는 비공식 스크립트 모음입니다.
+MockaTalk은 macOS용 공식 카카오톡 앱을 개인 사용 목적으로 복사해 별도 앱 번들로 실행하게 만드는 비공식 mock clone 스크립트 모음입니다.
 
 이 프로젝트는 Kakao Corp., 카카오톡, KakaoTalk와 아무 관련이 없습니다. 카카오에서 제공, 승인, 검수, 보증, 지원하는 앱이나 도구가 아닙니다.
 
