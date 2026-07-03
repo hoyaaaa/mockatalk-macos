@@ -1,4 +1,8 @@
-# MockaTalk
+<p align="center">
+  <img src="assets/mockatalk-icon.png" alt="MockaTalk logo" width="160">
+</p>
+
+<h1 align="center">MockaTalk</h1>
 
 MockaTalk은 별도 브랜드나 공식 제품명이 아니라, macOS용 공식 카카오톡 앱을 개인 사용 목적으로 복사해 mock 복제본을 만드는 비공식 스크립트 모음입니다.
 
@@ -64,8 +68,6 @@ scripts/install-app.sh
 ```
 
 ## 앱 아이콘
-
-![MockaTalk app icon](assets/mockatalk-icon.png)
 
 앱 아이콘 원본은 `assets/mockatalk-icon.png`입니다. 설치 스크립트는 이 PNG를 macOS용 `AppIcon.icns`로 변환해 `/Applications/MockaTalk.app` 번들에 적용합니다.
 
