@@ -54,6 +54,24 @@ scripts/install-app.sh
 DISABLE_NOTIFICATIONS=0 scripts/install-app.sh
 ```
 
+실제 macOS 알림까지 켜려면 Apple Development 코드서명 인증서가 필요합니다. 설치 후 다음을 실행하면 `카카오톡Sub` 내부 알림 설정을 켜고, 앱을 개발자 인증서로 재서명한 뒤, macOS 알림 허용 profile 설치 화면을 엽니다.
+
+```bash
+scripts/enable-notifications.sh
+```
+
+macOS가 profile 자동 설치를 CLI에서 막기 때문에, profile이 처음 없을 때의 설치 승인만 시스템 설정에서 직접 눌러야 합니다. 이미 profile이 설치되어 있으면 이후 실행은 앱 재서명과 카카오톡 내부 알림 설정만 자동으로 갱신합니다. 배너 대신 닫을 때까지 남는 알림 스타일을 쓰려면:
+
+```bash
+REINSTALL_PROFILE=1 ALERT_TYPE=2 scripts/enable-notifications.sh
+```
+
+알림 설정을 다시 끄려면:
+
+```bash
+scripts/disable-notifications.sh
+```
+
 설치되는 항목:
 
 - 실행 앱: `/Applications/카카오톡Sub.app`
@@ -61,6 +79,7 @@ DISABLE_NOTIFICATIONS=0 scripts/install-app.sh
 - 표시 이름: `카카오톡Sub`
 - 업데이트 체커: `~/Library/LaunchAgents/com.hoyaaaa.KakaoTalkSub.update-checker.plist`
 - 업데이트 helper: `~/Library/Application Support/KakaoTalkSubMacos`
+- 선택 알림 profile: `com.hoyaaaa.KakaoTalkSub.notifications`
 
 ## 실행
 
@@ -89,7 +108,7 @@ scripts/install-app.sh
 - 같은 macOS 사용자 안에서 실행되는 앱 복사본입니다.
 - 하드웨어 정보, Mac 모델, OS 버전, IP 주소, 카카오 서버의 계정/세션 정보까지 숨기지는 않습니다.
 - 공식 앱과 완전히 다른 기기처럼 보장하는 방식은 아닙니다.
-- 원본 앱과 다른 번들 ID로 ad-hoc 서명되므로 macOS 알림, Dock 뱃지, Notification Center 등록은 안정적으로 동작한다고 보장하지 않습니다. 기본 설치는 충돌 가능성을 줄이기 위해 `카카오톡Sub`의 알림 관련 기본값을 꺼둡니다.
+- 원본 앱과 다른 번들 ID로 ad-hoc 서명되므로 macOS 알림, Dock 뱃지, Notification Center 등록은 안정적으로 동작한다고 보장하지 않습니다. 기본 설치는 충돌 가능성을 줄이기 위해 `카카오톡Sub`의 알림 관련 기본값을 꺼둡니다. `enable-notifications.sh`는 이 제한을 완화하기 위한 실험적 설정입니다.
 - 공식 앱 업데이트 후에는 `카카오톡Sub.app`을 다시 만들어야 합니다.
 - 카카오톡 정책 변경이나 앱 업데이트에 따라 언제든 동작하지 않을 수 있습니다.
 
