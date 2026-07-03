@@ -79,23 +79,40 @@ scripts/install-app.sh
 DISABLE_NOTIFICATIONS=0 scripts/install-app.sh
 ```
 
-실제 macOS 알림까지 켜려면 Apple Development 코드서명 인증서가 필요합니다. 설치 후 다음을 실행하면 `MockaTalk` 내부 알림 설정을 켜고, 앱을 개발자 인증서로 재서명한 뒤, macOS 알림 허용 profile 설치 화면을 엽니다.
+## 알림
+
+기본 설치는 알림 충돌 가능성을 줄이기 위해 `MockaTalk` 내부 알림 설정을 꺼둡니다. 실제 macOS 알림까지 켜려면 Apple Development 코드서명 인증서가 필요합니다.
+
+설치 후 다음을 실행하면 `MockaTalk` 내부 알림 설정을 켜고, 앱을 개발자 인증서로 재서명한 뒤, `com.hoyaaaa.MockaTalk.notifications` profile 파일을 생성합니다.
 
 ```bash
 scripts/enable-notifications.sh
 ```
 
-macOS가 profile 자동 설치를 CLI에서 막기 때문에, profile이 처음 없을 때의 설치 승인만 시스템 설정에서 직접 눌러야 합니다. 이미 profile이 설치되어 있으면 이후 실행은 앱 재서명과 카카오톡 내부 알림 설정만 자동으로 갱신합니다. 배너 대신 닫을 때까지 남는 알림 스타일을 쓰려면:
+생성되는 profile 파일:
+
+- 경로: `/tmp/MockaTalkNotifications.mobileconfig`
+- profile ID: `com.hoyaaaa.MockaTalk.notifications`
+- 대상 bundle ID: `com.hoyaaaa.MockaTalk`
+- 기본 스타일: 배너(`ALERT_TYPE=1`)
+
+macOS가 profile 자동 설치를 CLI에서 막기 때문에, profile이 처음 없을 때는 시스템 설정에서 직접 설치 승인을 눌러야 합니다. 설치 화면이 자동으로 뜨지 않으면 `/tmp/MockaTalkNotifications.mobileconfig`를 Finder에서 직접 열어 설치합니다.
+
+이미 profile이 설치되어 있으면 이후 실행은 앱 재서명과 MockaTalk 내부 알림 설정만 자동으로 갱신합니다. 배너 대신 닫을 때까지 남는 알림 스타일을 쓰려면:
 
 ```bash
 REINSTALL_PROFILE=1 ALERT_TYPE=2 scripts/enable-notifications.sh
 ```
+
+`KakaoTalkSub` 시절 profile(`com.hoyaaaa.KakaoTalkSub.notifications`)은 `MockaTalk`의 새 bundle ID에 적용되지 않습니다. `scripts/install-app.sh`는 기존 profile을 제거하고, `scripts/enable-notifications.sh`가 새 `MockaTalk` profile을 생성합니다.
 
 알림 설정을 다시 끄려면:
 
 ```bash
 scripts/disable-notifications.sh
 ```
+
+이 명령은 `com.hoyaaaa.MockaTalk.notifications` profile을 제거하고, `MockaTalk` 내부 알림 기본값을 다시 끈 뒤 앱을 ad-hoc 서명 상태로 되돌립니다.
 
 설치되는 항목:
 
