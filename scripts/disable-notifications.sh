@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_PATH="${APP_PATH:-/Applications/카카오톡Sub.app}"
-BUNDLE_ID="${BUNDLE_ID:-com.hoyaaaa.KakaoTalkSub}"
-PROFILE_ID="${PROFILE_ID:-com.hoyaaaa.KakaoTalkSub.notifications}"
+APP_PATH="${APP_PATH:-/Applications/MockaTalk.app}"
+BUNDLE_ID="${BUNDLE_ID:-com.hoyaaaa.MockaTalk}"
+PROFILE_ID="${PROFILE_ID:-com.hoyaaaa.MockaTalk.notifications}"
 RESIGN_ADHOC="${RESIGN_ADHOC:-1}"
 
 set_plist_bool() {
@@ -36,7 +36,7 @@ if [[ "$RESIGN_ADHOC" == "1" && -d "$APP_PATH" ]]; then
 fi
 
 echo "removed notification profile if present: $PROFILE_ID"
-echo "disabled KakaoTalkSub notification defaults"
+echo "disabled MockaTalk notification defaults"
 if [[ "$RESIGN_ADHOC" == "1" ]]; then
   echo "re-signed app ad-hoc: $APP_PATH"
 fi

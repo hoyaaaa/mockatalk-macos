@@ -2,18 +2,21 @@
 set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-LABEL="com.hoyaaaa.KakaoTalkSub.update-checker"
+LABEL="com.hoyaaaa.MockaTalk.update-checker"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
-SUPPORT_DIR="$HOME/Library/Application Support/KakaoTalkSubMacos"
+LEGACY_LABEL="com.hoyaaaa.KakaoTalkSub.update-checker"
+LEGACY_PLIST="$HOME/Library/LaunchAgents/$LEGACY_LABEL.plist"
+LEGACY_SUPPORT_DIR="$HOME/Library/Application Support/KakaoTalkSubMacos"
+SUPPORT_DIR="$HOME/Library/Application Support/MockaTalkMacos"
 INTERVAL_SECONDS="${INTERVAL_SECONDS:-300}"
-UPDATER_BIN="$SUPPORT_DIR/KakaoTalkSubUpdater"
-UPDATER_SRC="$PROJECT_DIR/Sources/KakaoTalkSubUpdater/main.swift"
+UPDATER_BIN="$SUPPORT_DIR/MockaTalkUpdater"
+UPDATER_SRC="$PROJECT_DIR/Sources/MockaTalkUpdater/main.swift"
 
 mkdir -p "$HOME/Library/LaunchAgents" "$SUPPORT_DIR/scripts" "$SUPPORT_DIR/assets"
 
 swiftc "$UPDATER_SRC" -o "$UPDATER_BIN"
-cp "$PROJECT_DIR/scripts/create-kakaotalk-macos-clone.sh" "$SUPPORT_DIR/scripts/create-kakaotalk-macos-clone.sh"
-chmod +x "$SUPPORT_DIR/scripts/create-kakaotalk-macos-clone.sh"
+cp "$PROJECT_DIR/scripts/create-mockatalk-clone.sh" "$SUPPORT_DIR/scripts/create-mockatalk-clone.sh"
+chmod +x "$SUPPORT_DIR/scripts/create-mockatalk-clone.sh"
 if [[ -d "$PROJECT_DIR/assets" ]]; then
   cp -R "$PROJECT_DIR/assets/." "$SUPPORT_DIR/assets/"
 fi
@@ -35,16 +38,19 @@ cat >"$PLIST" <<PLIST
   <key>RunAtLoad</key>
   <true/>
   <key>StandardOutPath</key>
-  <string>/tmp/kakaotalk-sub-update-checker.out.log</string>
+  <string>/tmp/mockatalk-update-checker.out.log</string>
   <key>StandardErrorPath</key>
-  <string>/tmp/kakaotalk-sub-update-checker.err.log</string>
+  <string>/tmp/mockatalk-update-checker.err.log</string>
 </dict>
 </plist>
 PLIST
 
 chmod 644 "$PLIST"
 
+launchctl bootout "gui/$(id -u)" "$LEGACY_PLIST" >/dev/null 2>&1 || true
 launchctl bootout "gui/$(id -u)" "$PLIST" >/dev/null 2>&1 || true
+rm -f "$LEGACY_PLIST"
+rm -rf "$LEGACY_SUPPORT_DIR"
 launchctl bootstrap "gui/$(id -u)" "$PLIST"
 launchctl enable "gui/$(id -u)/$LABEL"
 

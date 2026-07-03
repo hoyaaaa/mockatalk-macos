@@ -18,9 +18,9 @@ let projectDir = CommandLine.arguments.dropFirst().first
         .path
 
 let sourceApp = URL(fileURLWithPath: ProcessInfo.processInfo.environment["SRC_APP"] ?? "/Applications/KakaoTalk.app")
-let targetApp = URL(fileURLWithPath: ProcessInfo.processInfo.environment["DEST_APP"] ?? "/Applications/카카오톡Sub.app")
-let createScript = URL(fileURLWithPath: "\(projectDir)/scripts/create-kakaotalk-macos-clone.sh")
-let bundleID = "com.hoyaaaa.KakaoTalkSub"
+let targetApp = URL(fileURLWithPath: ProcessInfo.processInfo.environment["DEST_APP"] ?? "/Applications/MockaTalk.app")
+let createScript = URL(fileURLWithPath: "\(projectDir)/scripts/create-mockatalk-clone.sh")
+let bundleID = "com.hoyaaaa.MockaTalk"
 
 func version(for appURL: URL) -> AppVersion? {
     let plistURL = appURL.appendingPathComponent("Contents/Info.plist")
@@ -57,8 +57,8 @@ func quitRunningAppIfNeeded() -> Bool {
     }
 
     let choice = alert(
-        title: "카카오톡Sub 종료 필요",
-        message: "업데이트하려면 실행 중인 카카오톡Sub를 먼저 종료해야 합니다.\n\n종료하고 업데이트할까요?",
+        title: "MockaTalk 종료 필요",
+        message: "업데이트하려면 실행 중인 MockaTalk를 먼저 종료해야 합니다.\n\n종료하고 업데이트할까요?",
         buttons: ["나중에", "종료 후 업데이트"]
     )
 
@@ -76,15 +76,15 @@ func quitRunningAppIfNeeded() -> Bool {
     }
 
     _ = alert(
-        title: "카카오톡Sub 업데이트 중단",
-        message: "카카오톡Sub가 아직 종료되지 않아 업데이트하지 않았습니다.",
+        title: "MockaTalk 업데이트 중단",
+        message: "MockaTalk가 아직 종료되지 않아 업데이트하지 않았습니다.",
         buttons: ["확인"]
     )
     return false
 }
 
 func recreateTargetApp() throws {
-    let logURL = URL(fileURLWithPath: "/tmp/kakaotalk-sub-update.log")
+    let logURL = URL(fileURLWithPath: "/tmp/mockatalk-update.log")
     fileManager.createFile(atPath: logURL.path, contents: nil)
 
     let process = Process()
@@ -103,9 +103,9 @@ func recreateTargetApp() throws {
 
     guard process.terminationStatus == 0 else {
         throw NSError(
-            domain: "KakaoTalkSubUpdater",
+            domain: "MockaTalkUpdater",
             code: Int(process.terminationStatus),
-            userInfo: [NSLocalizedDescriptionKey: "create-kakaotalk-macos-clone.sh failed"]
+            userInfo: [NSLocalizedDescriptionKey: "create-mockatalk-clone.sh failed"]
         )
     }
 }
@@ -123,14 +123,14 @@ guard sourceVersion != targetVersion else {
 }
 
 let choice = alert(
-    title: "카카오톡Sub 업데이트",
+    title: "MockaTalk 업데이트",
     message: """
-    공식 카카오톡 버전과 카카오톡Sub 버전이 다릅니다.
+    공식 카카오톡 버전과 MockaTalk 버전이 다릅니다.
 
     공식: \(sourceVersion.display)
-    Sub: \(targetVersion.display)
+    MockaTalk: \(targetVersion.display)
 
-    지금 카카오톡Sub를 새 공식 버전 기준으로 다시 만들까요?
+    지금 MockaTalk를 새 공식 버전 기준으로 다시 만들까요?
     """,
     buttons: ["나중에", "업데이트"]
 )
@@ -143,16 +143,16 @@ do {
     try recreateTargetApp()
 } catch {
     _ = alert(
-        title: "카카오톡Sub 업데이트 실패",
-        message: "업데이트 중 오류가 발생했습니다.\n\n로그: /tmp/kakaotalk-sub-update.log",
+        title: "MockaTalk 업데이트 실패",
+        message: "업데이트 중 오류가 발생했습니다.\n\n로그: /tmp/mockatalk-update.log",
         buttons: ["확인"]
     )
     exit(1)
 }
 
 let openChoice = alert(
-    title: "카카오톡Sub 업데이트 완료",
-    message: "카카오톡Sub를 공식 카카오톡 \(sourceVersion.display) 기준으로 업데이트했습니다.",
+    title: "MockaTalk 업데이트 완료",
+    message: "MockaTalk를 공식 카카오톡 \(sourceVersion.display) 기준으로 업데이트했습니다.",
     buttons: ["확인", "열기"]
 )
 

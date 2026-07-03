@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_PATH="${APP_PATH:-/Applications/카카오톡Sub.app}"
-BUNDLE_ID="${BUNDLE_ID:-com.hoyaaaa.KakaoTalkSub}"
-DISPLAY_NAME="${DISPLAY_NAME:-카카오톡Sub}"
-PROFILE_PATH="${PROFILE_PATH:-/tmp/KakaoTalkSubNotifications.mobileconfig}"
+APP_PATH="${APP_PATH:-/Applications/MockaTalk.app}"
+BUNDLE_ID="${BUNDLE_ID:-com.hoyaaaa.MockaTalk}"
+DISPLAY_NAME="${DISPLAY_NAME:-MockaTalk}"
+PROFILE_PATH="${PROFILE_PATH:-/tmp/MockaTalkNotifications.mobileconfig}"
 ALERT_TYPE="${ALERT_TYPE:-1}" # 1: banner, 2: alert
-PROFILE_ID="${PROFILE_ID:-com.hoyaaaa.KakaoTalkSub.notifications}"
+PROFILE_ID="${PROFILE_ID:-com.hoyaaaa.MockaTalk.notifications}"
 SIGN_ID="${SIGN_ID:-}"
 REINSTALL_PROFILE="${REINSTALL_PROFILE:-0}"
 
@@ -61,11 +61,11 @@ codesign --force --deep --sign "$SIGN_ID" "$APP_PATH" >/dev/null
 
 payload_uuid="$(uuidgen)"
 profile_uuid="$(uuidgen)"
-profile_title="카카오톡Sub 알림 배너 허용"
-profile_desc="카카오톡Sub의 macOS 알림을 배너 스타일로 허용합니다."
+profile_title="MockaTalk 알림 배너 허용"
+profile_desc="MockaTalk의 macOS 알림을 배너 스타일로 허용합니다."
 if [[ "$ALERT_TYPE" == "2" ]]; then
-  profile_title="카카오톡Sub 알림 허용"
-  profile_desc="카카오톡Sub의 macOS 알림을 알림 스타일로 허용합니다."
+  profile_title="MockaTalk 알림 허용"
+  profile_desc="MockaTalk의 macOS 알림을 알림 스타일로 허용합니다."
 fi
 
 cat >"$PROFILE_PATH" <<EOF
@@ -85,7 +85,7 @@ cat >"$PROFILE_PATH" <<EOF
       <key>PayloadUUID</key>
       <string>$payload_uuid</string>
       <key>PayloadDisplayName</key>
-      <string>카카오톡Sub 알림 허용</string>
+      <string>MockaTalk 알림 허용</string>
       <key>NotificationSettings</key>
       <array>
         <dict>
@@ -122,7 +122,7 @@ cat >"$PROFILE_PATH" <<EOF
   <key>PayloadDescription</key>
   <string>$profile_desc</string>
   <key>PayloadOrganization</key>
-  <string>KakaoTalkSubMacos</string>
+  <string>MockaTalkMacos</string>
 </dict>
 </plist>
 EOF
@@ -142,7 +142,7 @@ else
   profile_action="finish by installing the opened profile in System Settings"
 fi
 
-echo "enabled KakaoTalkSub notification defaults"
+echo "enabled MockaTalk notification defaults"
 echo "signed app with: $SIGN_ID"
 echo "profile created: $PROFILE_PATH"
 echo "profile style: $([[ "$ALERT_TYPE" == "1" ]] && echo banner || echo alert)"

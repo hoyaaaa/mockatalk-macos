@@ -2,14 +2,14 @@
 set -euo pipefail
 
 SRC_APP="${SRC_APP:-/Applications/KakaoTalk.app}"
-DEST_APP="${DEST_APP:-/Applications/카카오톡Sub.app}"
-BUNDLE_ID="${BUNDLE_ID:-com.hoyaaaa.KakaoTalkSub}"
-DISPLAY_NAME="${DISPLAY_NAME:-카카오톡Sub}"
-EXECUTABLE_NAME="${EXECUTABLE_NAME:-KakaoTalkSub}"
-URL_SUFFIX="${URL_SUFFIX:-sub}"
+DEST_APP="${DEST_APP:-/Applications/MockaTalk.app}"
+BUNDLE_ID="${BUNDLE_ID:-com.hoyaaaa.MockaTalk}"
+DISPLAY_NAME="${DISPLAY_NAME:-MockaTalk}"
+EXECUTABLE_NAME="${EXECUTABLE_NAME:-MockaTalk}"
+URL_SUFFIX="${URL_SUFFIX:-mockatalk}"
 DISABLE_NOTIFICATIONS="${DISABLE_NOTIFICATIONS:-1}"
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ICON_SOURCE="${ICON_SOURCE:-$PROJECT_DIR/assets/kakaotalk-sub-icon.png}"
+ICON_SOURCE="${ICON_SOURCE:-$PROJECT_DIR/assets/mockatalk-icon.png}"
 
 set_plist_string() {
   local file="$1"
@@ -71,10 +71,9 @@ apply_custom_icon() {
   sips -z 1024 1024 "$icon_source" --out "$iconset/icon_512x512@2x.png" >/dev/null
 
   iconutil -c icns "$iconset" -o "$DEST_APP/Contents/Resources/${icon_name}.icns"
-  /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile $icon_name" "$INFO" 2>/dev/null || \
-    /usr/libexec/PlistBuddy -c "Add :CFBundleIconFile string $icon_name" "$INFO"
-  /usr/libexec/PlistBuddy -c "Set :CFBundleIconName $icon_name" "$INFO" 2>/dev/null || \
-    /usr/libexec/PlistBuddy -c "Add :CFBundleIconName string $icon_name" "$INFO"
+  /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile ${icon_name}.icns" "$INFO" 2>/dev/null || \
+    /usr/libexec/PlistBuddy -c "Add :CFBundleIconFile string ${icon_name}.icns" "$INFO"
+  /usr/libexec/PlistBuddy -c "Delete :CFBundleIconName" "$INFO" 2>/dev/null || true
 }
 
 if [[ ! -d "$SRC_APP" ]]; then
